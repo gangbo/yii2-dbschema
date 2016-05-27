@@ -1,0 +1,22 @@
+{
+    "name": "gangbo/yii2-dbschema",
+    "description": "help you refresh db schema",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","db","schema"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gangbo",
+            "email": "daigangbo@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "gangbo/yii2-dbschema": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "gangbo\\dbschema\\": "src/"
+        }
+    }
+}
