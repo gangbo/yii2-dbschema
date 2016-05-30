@@ -29,7 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php Pjax::begin(); ?>
-    <?= \dmstr\widgets\Alert::widget() ?>
+
+    <!-- alert begin -->
+    <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
+        <?php if (in_array($type, ['success', 'danger', 'warning', 'info'])): ?>
+            <div class="alert alert-<?= $type ?>">
+                <?= $message ?>
+            </div>
+        <?php endif ?>
+    <?php endforeach ?>
+    <!-- alert end -->
+
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $tbSchemaProvider,
         'columns' => [
@@ -54,7 +64,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     /** @var \yii\db\TableSchema $tbSchema */
                     return Html::a(
                         '刷新',
-                        ['refresh', 'dbName' => $model->name, 'tbName' => $tbSchema->name, 'tbN' => $tbSchema->fullName],
+                        [
+                            'refresh',
+                            'dbName' => $model->name,
+                            'tbName' => $tbSchema->name,
+                            'tbN' => $tbSchema->fullName
+                        ],
                         [
                             'class' => 'btn btn-success',
                             'data' => [

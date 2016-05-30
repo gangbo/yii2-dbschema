@@ -67,7 +67,7 @@ class IndexController extends Controller
             $db->schema->refresh();
         }
         $session = Yii::$app->session;
-        $session->setFlash('info', '刷新完成');
+        $session->setFlash('info', '刷新完成 执行时间:' . date('Y-m-d H:i:s'));
         return $this->actionView($dbName);
     }
 
