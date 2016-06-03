@@ -1,6 +1,6 @@
 yii2 db schema 
 ===============
-help you refresh db schema
+help you refresh db schema 2016
 
 Installation
 ------------
@@ -28,12 +28,4 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-'modules' => [
-    ...
-    'dbschema' => [
-        'class' => 'gangbo\dbschema\Module',
-    ],
-    ...
-]
-```
-http://yourhost/index.php?r=dbschema
+<?= \gangbo\dbschema\AutoloadExample::widget(); ?>```
