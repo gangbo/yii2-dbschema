@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php Pjax::begin(); ?>
-
     <!-- alert begin -->
     <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
         <?php if (in_array($type, ['success', 'danger', 'warning', 'info'])): ?>
