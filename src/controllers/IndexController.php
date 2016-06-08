@@ -10,6 +10,7 @@ namespace gangbo\dbschema\controllers;
 
 use gangbo\dbschema\models\DbCollection;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 
@@ -17,9 +18,6 @@ class IndexController extends Controller
 {
 
     const DB_CLASS = 'yii\db\Connection';
-    private $_dbArray = [
-        'db',
-    ];
 
     /**
      * @return string
@@ -29,7 +27,7 @@ class IndexController extends Controller
     {
 
         $data = [];
-        foreach ($this->_dbArray as $key) {
+        foreach ($this->getDbComponentFromConfig() as $key) {
             /** @var DbCollection $dbCollection */
             $dbCollection = Yii::createObject([
                 'class' => DbCollection::className(),
@@ -42,7 +40,7 @@ class IndexController extends Controller
         $provider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 50,
             ],
         ]);
 
@@ -78,6 +76,9 @@ class IndexController extends Controller
      */
     public function actionView($dbName)
     {
+        if (!Yii::$app->has($dbName)) {
+            throw new InvalidConfigException("component $dbName 不存在");
+        }
         /** @var DbCollection $model */
         $model = Yii::createObject([
             'class' => DbCollection::className(),
@@ -101,6 +102,21 @@ class IndexController extends Controller
             'model' => $model,
             'tbSchemaProvider' => $tableSchemaProvider,
         ]);
+    }
+
+    /**
+     * 从application配置中找到所有db组件
+     * @return array
+     */
+    protected function getDbComponentFromConfig()
+    {
+        $dbComponents = [];
+        foreach(Yii::$app->components as $key=>$conf) {
+            if ($conf['class'] == self::DB_CLASS) {
+               $dbComponents[] = $key;
+            }
+        }
+        return $dbComponents;
     }
 
 }

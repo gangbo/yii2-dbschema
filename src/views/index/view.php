@@ -2,6 +2,7 @@
 
 use gangbo\dbschema\AssetBundle;
 use yii\bootstrap\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
@@ -15,7 +16,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="api-user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php $form = ActiveForm::begin([
+        'method' => 'get'
+    ]); ?>
+    <?= $form->field($model, 'name', [
+        'inputOptions' => [
+            'name' => 'dbName',
+        ],
+        'labelOptions' => [
+            'label' => '请输入你配置的DB组件名',
+        ],
+    ]) ?>
+    <?= Html::submitButton('查询', ['class' => 'btn btn-primary']) ?>
+    <?php ActiveForm::end(); ?>
 
     <?= DetailView::widget([
         'model' => $model,
